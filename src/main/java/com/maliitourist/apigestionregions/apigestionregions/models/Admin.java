@@ -1,5 +1,7 @@
 package com.maliitourist.apigestionregions.apigestionregions.models;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +11,6 @@ import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.*;;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +24,7 @@ public class Admin {
     private String nom;
     private String prenom;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "admin")
     Set<Region> region;
 
