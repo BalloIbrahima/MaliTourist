@@ -4,14 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,20 +26,25 @@ public class Region {
 
     private int superficie;
 
-    // @OneToMany
-    // private Pays pays;
-
-    // @OneToMany
-    // private Population population;
-
-    // @OneToMany
-    // private DomaineActivite domaineActivite;
-
-    // @OneToMany
-    // private Langue langue;
+    @ManyToOne
+    @JoinColumn(name = "pays")
+    private Pays pays;
 
     @ManyToOne
+    @JoinColumn(name = "population")
+    private Population population;
+
+    @ManyToOne
+    @JoinColumn(name = "domaineActivite")
+    private DomaineActivite domaineActivite;
+
+    @ManyToOne
+    @JoinColumn(name = "langue")
+    private Langue langue;
+
+    @ManyToOne
+    @JoinColumn(name = "admin")
     private Admin admin;
-    // Fin des varioables
+    // Fin des variables
 
 }
