@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
 
-public interface LangueRepository<integer> extends JpaRepository<Langue, integer>{
+public interface LangueRepository extends JpaRepository<Langue, Integer>{
     
 }
