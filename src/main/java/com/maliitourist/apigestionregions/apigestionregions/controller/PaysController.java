@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,7 +43,6 @@ public class PaysController {
     @PutMapping("/mettreajour")
     public ResponseEntity<Object> MiseAJourPays(@RequestBody Pays pays) {
 
-        System.out.println(pays);
         Pays verif_pays = service.getPaysByNom(pays.getNom());
         if (verif_pays != null) {
             Pays Enregistrepays = service.updatePays(pays);
@@ -56,14 +56,15 @@ public class PaysController {
     // Fin
 
     // methode pour la surpression d'un pays
-    @DeleteMapping("/suprimer")
-    public ResponseEntity<Object> SuprimerPays(@RequestBody Pays pays) {
+    @DeleteMapping("/suprimer/{nom}")
+    public ResponseEntity<Object> SuprimerPays(@PathVariable String nom) {
 
-        try {
+        Pays pays = service.getPaysByNom(nom);
+
+        if (pays != null) {
             service.deletePays(pays);
-            return ResponseMessage.generateResponse("Ce pays existe déja", HttpStatus.OK, null);
-
-        } catch (Exception e) {
+            return ResponseMessage.generateResponse("Pays suprimer", HttpStatus.OK, null);
+        } else {
             return ResponseMessage.generateResponse("Erreur lors de la surpression.", HttpStatus.OK, null);
         }
 
