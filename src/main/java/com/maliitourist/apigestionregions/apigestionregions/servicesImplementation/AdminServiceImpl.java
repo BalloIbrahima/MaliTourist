@@ -3,11 +3,13 @@ package com.maliitourist.apigestionregions.apigestionregions.servicesImplementat
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
 import com.maliitourist.apigestionregions.apigestionregions.repository.AdminRepository;
 import com.maliitourist.apigestionregions.apigestionregions.services.AdminService;
 
+@Service
 public class AdminServiceImpl implements AdminService {
 
     @Autowired

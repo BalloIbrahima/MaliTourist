@@ -1,8 +1,6 @@
 package com.maliitourist.apigestionregions.apigestionregions.models;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,8 +19,7 @@ public class Region {
 
     // Déclaration des variables
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int code_region;
+    private String code_region;
 
     private String nom;
 
