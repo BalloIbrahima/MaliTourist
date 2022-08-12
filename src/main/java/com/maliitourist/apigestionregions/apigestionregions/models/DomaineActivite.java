@@ -11,22 +11,23 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 public class DomaineActivite {
-    @Id @GeneratedValue(strategy =GenerationType.SEQUENCE )
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int code_activite;
     private String nom_activite;
 
     @JsonIgnore
     @OneToMany(mappedBy = "domaineActivite")
-    Set <Region> region;
-
-
+    Set<Region> region;
 
 }

@@ -6,19 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d56b3fb2e12132c04fa5a50e428fdfcf15f8d29
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-<<<<<<< HEAD
 import lombok.Setter;
-=======
->>>>>>> 4d56b3fb2e12132c04fa5a50e428fdfcf15f8d29
 
 @AllArgsConstructor
 @NoArgsConstructor

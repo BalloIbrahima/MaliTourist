@@ -1,6 +1,5 @@
 package com.maliitourist.apigestionregions.apigestionregions.models;
 
-
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -12,16 +11,19 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 public class Pays {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int code_pays;
+    @Id
+    private String code_pays;
     private String nom;
 
     @JsonIgnore

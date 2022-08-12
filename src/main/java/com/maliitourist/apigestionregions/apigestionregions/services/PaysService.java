@@ -2,11 +2,17 @@ package com.maliitourist.apigestionregions.apigestionregions.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.maliitourist.apigestionregions.apigestionregions.models.Pays;
 
+@Service
 public interface PaysService {
     // Methode pour la création d'un admin
     Pays savePays(Pays a);
+
+    // Methode pour la création d'un admin
+    Pays getPaysByNom(String nom);
 
     // Methode pour la modification d'un Pays
     Pays updatePays(Pays a);
