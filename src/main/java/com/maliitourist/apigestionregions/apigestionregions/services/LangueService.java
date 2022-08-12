@@ -2,11 +2,11 @@ package com.maliitourist.apigestionregions.apigestionregions.services;
 
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
 
-@Controller
+@Service
 public interface LangueService {
     Langue saveLangue(Langue l);
     Langue updateLangue(Langue l);
