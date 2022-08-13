@@ -15,7 +15,10 @@ import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMess
 import com.maliitourist.apigestionregions.apigestionregions.models.Region;
 import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.RegionServiceImpl;
 
+import io.swagger.annotations.Api;
+
 @RequestMapping("/region")
+@Api(value = "region", description = "Les actions à réaliser sur la table region(creation, modification, etc ...).")
 @Controller
 public class RegionController {
 

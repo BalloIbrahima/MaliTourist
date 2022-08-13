@@ -12,7 +12,10 @@ import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMess
 import com.maliitourist.apigestionregions.apigestionregions.models.Population;
 import com.maliitourist.apigestionregions.apigestionregions.services.PopulationService;
 
+import io.swagger.annotations.Api;
+
 @RequestMapping("/population")
+@Api(value = "population", description = "Les actions à réaliser sur la table population(creation, modification, etc ...).")
 @RestController
 public class PopulationController {
 

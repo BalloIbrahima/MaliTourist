@@ -16,7 +16,10 @@ import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMess
 import com.maliitourist.apigestionregions.apigestionregions.models.Pays;
 import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.PaysServiceImpl;
 
+import io.swagger.annotations.Api;
+
 @RequestMapping("/pays")
+@Api(value = "pays", description = "Les actions à réaliser sur la table pays(creation, modification, etc ...).")
 @Controller
 public class PaysController {
 

@@ -15,6 +15,9 @@ import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMess
 import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
 import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.AdminServiceImpl;
 
+import io.swagger.annotations.Api;
+
+@Api(value = "admin", description = "Les actions de l'adlinistrateur")
 @RequestMapping("/admin")
 @Controller
 public class AdminController {

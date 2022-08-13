@@ -1,8 +1,11 @@
 package com.maliitourist.apigestionregions.apigestionregions.models;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -33,9 +36,10 @@ public class Region {
     @JoinColumn(name = "pays")
     private Pays pays;
 
-    @ManyToMany
-    @JoinTable(name = "PopulationRegion", joinColumns = @JoinColumn(name = "idRegion"), inverseJoinColumns = @JoinColumn(name = "idPopulation"))
-    Set<Population> population;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "PopulationRegion", joinColumns = { @JoinColumn(name = "idRegion") }, inverseJoinColumns = {
+            @JoinColumn(name = "idPopulation") })
+    List<Population> population = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "domaineActivite")

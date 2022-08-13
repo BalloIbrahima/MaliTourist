@@ -12,7 +12,10 @@ import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMess
 import com.maliitourist.apigestionregions.apigestionregions.models.DomaineActivite;
 import com.maliitourist.apigestionregions.apigestionregions.services.Domaine_activiteService;
 
+import io.swagger.annotations.Api;
+
 @RequestMapping("/domaine")
+@Api(value = "domaine", description = "Les actions à réaliser sur le domaine.")
 @Controller
 public class Domaine_activiteController {
 

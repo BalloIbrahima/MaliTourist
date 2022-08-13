@@ -1,6 +1,7 @@
 package com.maliitourist.apigestionregions.apigestionregions.models;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,6 @@ public class Admin {
 
     @JsonIgnore
     @OneToMany(mappedBy = "admin")
-    Set<Region> region;
+    List<Region> region = new ArrayList<>();
 
 }

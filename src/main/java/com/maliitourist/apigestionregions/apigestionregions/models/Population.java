@@ -1,8 +1,11 @@
 package com.maliitourist.apigestionregions.apigestionregions.models;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +31,7 @@ public class Population {
     private Long annee;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "population")
-    Set<Region> region;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "population")
+    List<Region> region = new ArrayList<>();
 
 }

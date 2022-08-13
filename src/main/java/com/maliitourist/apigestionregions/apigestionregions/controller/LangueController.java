@@ -12,7 +12,10 @@ import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMess
 import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
 import com.maliitourist.apigestionregions.apigestionregions.services.LangueService;
 
+import io.swagger.annotations.Api;
+
 @RequestMapping("/langue")
+@Api(value = "langue", description = "Les actions à réaliser sur la table langue(creation, modification, etc ...).")
 @RestController
 public class LangueController {
 
