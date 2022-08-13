@@ -24,7 +24,7 @@ public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id_admin;
+    private int id;
     private String nom;
     private String prenom;
 

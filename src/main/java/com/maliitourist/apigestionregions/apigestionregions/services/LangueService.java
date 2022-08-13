@@ -9,8 +9,13 @@ import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
 @Service
 public interface LangueService {
     Langue saveLangue(Langue l);
+
     Langue updateLangue(Langue l);
+
     void deleteLangue(Langue l);
+
     List<Langue> getAllLangue();
-    
+
+    Langue findByLibele(String nom);
+
 }

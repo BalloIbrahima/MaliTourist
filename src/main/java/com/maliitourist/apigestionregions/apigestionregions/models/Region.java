@@ -1,8 +1,12 @@
 package com.maliitourist.apigestionregions.apigestionregions.models;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
@@ -29,9 +33,9 @@ public class Region {
     @JoinColumn(name = "pays")
     private Pays pays;
 
-    @ManyToOne
-    @JoinColumn(name = "population")
-    private Population population;
+    @ManyToMany
+    @JoinTable(name = "PopulationRegion", joinColumns = @JoinColumn(name = "idRegion"), inverseJoinColumns = @JoinColumn(name = "idPopulation"))
+    Set<Population> population;
 
     @ManyToOne
     @JoinColumn(name = "domaineActivite")
@@ -40,6 +44,7 @@ public class Region {
     @ManyToOne
     @JoinColumn(name = "langue")
     private Langue langue;
+    //
 
     @ManyToOne
     @JoinColumn(name = "admin")

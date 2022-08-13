@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,11 +24,11 @@ public class Population {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int code_population;
-    private int nombre_habitants;
-    private String annee;
+    private Long nombre_habitants;
+    private Long annee;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "population")
+    @ManyToMany(mappedBy = "population")
     Set<Region> region;
 
 }

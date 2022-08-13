@@ -10,7 +10,7 @@ import com.maliitourist.apigestionregions.apigestionregions.repository.Domaine_a
 import com.maliitourist.apigestionregions.apigestionregions.services.Domaine_activiteService;
 
 @Service
-public class Domaine_activiteServiceImpl implements Domaine_activiteService{
+public class Domaine_activiteServiceImpl implements Domaine_activiteService {
     @Autowired
     Domaine_activiteRepository repos;
 
@@ -37,5 +37,11 @@ public class Domaine_activiteServiceImpl implements Domaine_activiteService{
         // TODO Auto-generated method stub
         return repos.findAll();
     }
-    
+
+    @Override
+    public DomaineActivite FindByNom(String nom) {
+        // TODO Auto-generated method stub
+        return repos.findByNom(nom);
+    }
+
 }

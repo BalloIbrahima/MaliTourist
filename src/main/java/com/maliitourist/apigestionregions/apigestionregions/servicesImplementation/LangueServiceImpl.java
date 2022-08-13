@@ -3,12 +3,14 @@ package com.maliitourist.apigestionregions.apigestionregions.servicesImplementat
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
 import com.maliitourist.apigestionregions.apigestionregions.repository.LangueRepository;
 import com.maliitourist.apigestionregions.apigestionregions.services.LangueService;
 
-public class LangueServiceImpl implements LangueService{
+@Service
+public class LangueServiceImpl implements LangueService {
     @Autowired
     LangueRepository repos;
 
@@ -28,7 +30,7 @@ public class LangueServiceImpl implements LangueService{
     public void deleteLangue(Langue l) {
         // TODO Auto-generated method stub
         repos.delete(l);
-        
+
     }
 
     @Override
@@ -36,5 +38,11 @@ public class LangueServiceImpl implements LangueService{
         // TODO Auto-generated method stub
         return repos.findAll();
     }
-    
+
+    @Override
+    public Langue findByLibele(String nom) {
+        // TODO Auto-generated method stub
+        return repos.findByLibele(nom);
+    }
+
 }

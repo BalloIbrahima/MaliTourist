@@ -21,7 +21,7 @@ import lombok.Setter;
 public class DomaineActivite {
     @Id
     private String code_activite;
-    private String nom_activite;
+    private String nom;
 
     @JsonIgnore
     @OneToMany(mappedBy = "domaineActivite")

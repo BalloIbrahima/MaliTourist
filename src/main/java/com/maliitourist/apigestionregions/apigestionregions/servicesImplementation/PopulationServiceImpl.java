@@ -3,11 +3,13 @@ package com.maliitourist.apigestionregions.apigestionregions.servicesImplementat
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.maliitourist.apigestionregions.apigestionregions.models.Population;
 import com.maliitourist.apigestionregions.apigestionregions.repository.PopulationRepository;
 import com.maliitourist.apigestionregions.apigestionregions.services.PopulationService;
 
+@Service
 public class PopulationServiceImpl implements PopulationService {
     @Autowired
     PopulationRepository Repos;
@@ -27,13 +29,13 @@ public class PopulationServiceImpl implements PopulationService {
     @Override
     public void deletePopulation(Population p) {
         Repos.delete(p);
-        
+
     }
 
     @Override
     public List<Population> getAllPopulation() {
-       
+
         return Repos.findAll();
     }
-    
+
 }
