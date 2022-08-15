@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMessage;
+import com.maliitourist.apigestionregions.apigestionregions.models.DomaineActivite;
+import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
+import com.maliitourist.apigestionregions.apigestionregions.models.Pays;
 import com.maliitourist.apigestionregions.apigestionregions.models.Region;
-import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.RegionServiceImpl;
+import com.maliitourist.apigestionregions.apigestionregions.services.Domaine_activiteService;
+import com.maliitourist.apigestionregions.apigestionregions.services.LangueService;
+import com.maliitourist.apigestionregions.apigestionregions.services.PaysService;
+import com.maliitourist.apigestionregions.apigestionregions.services.RegionService;
 
 import io.swagger.annotations.Api;
 
@@ -24,7 +30,16 @@ import io.swagger.annotations.Api;
 public class RegionController {
 
     @Autowired
-    private RegionServiceImpl service;
+    private RegionService service;
+
+    @Autowired
+    private PaysService Pservice;
+
+    @Autowired
+    private LangueService Lservice;
+
+    @Autowired
+    private Domaine_activiteService Dservice;
 
     // methode pour la création d'un Region
     @GetMapping("/{nom}")
@@ -42,28 +57,47 @@ public class RegionController {
 
     // methode pour la création d'un Region
     @PostMapping("/creer")
-    public ResponseEntity<Object> CreerRegion(@RequestBody Region Region) {
+    public ResponseEntity<Object> CreerRegion(@RequestBody Region region) {
 
-        System.out.println(Region);
-        Region verif_Region = service.getRegionByNom(Region.getNom());
-        if (verif_Region == null) {
-            Region EnregistreRegion = service.saveRegion(Region);
+        Region verif_RegionName = service.getRegionByNom(region.getNom());
+        Region verif_RegionCode = service.getRegionByNom(region.getCode());
+
+        if (verif_RegionCode == null && verif_RegionName == null) {
+            // verification de l'existance du pays, de la langue et du domaine
+            Pays pays = Pservice.getPaysByNom(region.getPays().getNom());
+            Langue langue = Lservice.findByLibele(region.getLangue().getLibele());
+            DomaineActivite domaine = Dservice.FindByNom(region.getDomaineActivite().getNom());
+            //
+            // s'il l'une d'entre elles n'existe pas la créer
+            if (pays == null) {
+                Pservice.savePays(region.getPays());
+            }
+            if (langue == null) {
+                Lservice.saveLangue(region.getLangue());
+            }
+            if (domaine == null) {
+                Dservice.saveDomaineActivite(region.getDomaineActivite());
+            }
+            //
+            // après créer la region
+            Region EnregistreRegion = service.saveRegion(region);
             return ResponseMessage.generateResponse("Region ajoutée avec succes", HttpStatus.OK, EnregistreRegion);
         } else {
-            return ResponseMessage.generateResponse("Cette Region existe déja", HttpStatus.OK, verif_Region);
+            return ResponseMessage.generateResponse("Cette Region existe déja", HttpStatus.OK, null);
         }
 
     }
     // Fin
 
     // methode pour la mise à jour d'un Region
-    @PutMapping("/mettreajour/{id}")
-    public ResponseEntity<Object> MiseAJourRegion(@RequestBody Region Region) {
+    @PutMapping("/mettreajour/{CodeRegion}")
+    public ResponseEntity<Object> MiseAJourRegion(@RequestBody Region region,
+            @PathVariable(value = "CodeRegion") String code) {
 
-        System.out.println(Region);
-        Region verif_Region = service.getRegionByNom(Region.getNom());
-        if (verif_Region != null) {
-            Region EnregistreRegion = service.updateRegion(Region);
+        System.out.println(region.getNom());
+        Region verif_Region = service.getRegionByCode(code);
+        if (verif_Region == null) {
+            Region EnregistreRegion = service.updateRegion(region);
             return ResponseMessage.generateResponse("Region modifiée avec succes", HttpStatus.OK, EnregistreRegion);
         } else {
             return ResponseMessage.generateResponse("Cette Region n'existe pas, donc vous ne pouvez pas la modifiée.",
@@ -94,6 +128,20 @@ public class RegionController {
 
         try {
             return ResponseMessage.generateResponse("La liste de Region:", HttpStatus.OK, service.getAllRegion());
+
+        } catch (Exception e) {
+            return ResponseMessage.generateResponse("Erreur lors du retour de la liste.", HttpStatus.OK, null);
+        }
+
+    }
+    // Fin
+
+    // methode pour la liste des Region
+    @GetMapping("/listeSansPays")
+    public ResponseEntity<Object> ListeRegionSans() {
+
+        try {
+            return ResponseMessage.generateResponse("La liste de Region:", HttpStatus.OK, service.getRegionSansPay());
 
         } catch (Exception e) {
             return ResponseMessage.generateResponse("Erreur lors du retour de la liste.", HttpStatus.OK, null);

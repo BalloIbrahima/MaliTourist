@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Pays {
 
     @Id
-    private String code_pays;
+    private String code;
     private String nom;
 
     @JsonIgnore

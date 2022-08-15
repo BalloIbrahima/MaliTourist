@@ -3,9 +3,7 @@ package com.maliitourist.apigestionregions.apigestionregions.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,7 +24,7 @@ public class Region {
 
     // Déclaration des variables
     @Id
-    private String code_region;
+    private String code;
 
     private String nom;
 
@@ -36,7 +34,7 @@ public class Region {
     @JoinColumn(name = "pays")
     private Pays pays;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "PopulationRegion", joinColumns = { @JoinColumn(name = "idRegion") }, inverseJoinColumns = {
             @JoinColumn(name = "idPopulation") })
     List<Population> population = new ArrayList<>();

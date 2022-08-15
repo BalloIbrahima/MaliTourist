@@ -17,4 +17,6 @@ public interface Domaine_activiteService {
 
     DomaineActivite FindByNom(String nom);
 
+    // Methode pour recuperer le pays à travers le code
+    DomaineActivite getDomaineByCode(String code);
 }

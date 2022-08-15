@@ -7,4 +7,6 @@ import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
 public interface LangueRepository extends JpaRepository<Langue, Integer> {
     Langue findByLibele(String nom);
 
+    Langue findByCode(String code);
+
 }

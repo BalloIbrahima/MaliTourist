@@ -21,7 +21,7 @@ import lombok.Setter;
 @Entity
 public class Langue {
     @Id
-    private String code_langue;
+    private String code;
     private String libele;
 
     @JsonIgnore

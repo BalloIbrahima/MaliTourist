@@ -45,4 +45,10 @@ public class LangueServiceImpl implements LangueService {
         return repos.findByLibele(nom);
     }
 
+    @Override
+    public Langue getLangueByCode(String code) {
+        // TODO Auto-generated method stub
+        return repos.findByCode(code);
+    }
+
 }

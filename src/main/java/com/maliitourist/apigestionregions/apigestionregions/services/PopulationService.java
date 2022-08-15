@@ -9,9 +9,11 @@ import com.maliitourist.apigestionregions.apigestionregions.models.Population;
 @Service
 public interface PopulationService {
     Population savePopulation(Population p);
+
     Population updatePopulation(Population p);
+
     void deletePopulation(Population p);
+
     List<Population> getAllPopulation();
 
-    
 }

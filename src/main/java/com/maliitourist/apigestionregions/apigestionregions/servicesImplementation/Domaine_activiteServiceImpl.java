@@ -44,4 +44,10 @@ public class Domaine_activiteServiceImpl implements Domaine_activiteService {
         return repos.findByNom(nom);
     }
 
+    @Override
+    public DomaineActivite getDomaineByCode(String code) {
+        // TODO Auto-generated method stub
+        return repos.findByCode(code);
+    }
+
 }

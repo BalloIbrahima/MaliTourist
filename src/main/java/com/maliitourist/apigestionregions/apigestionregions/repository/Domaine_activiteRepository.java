@@ -7,4 +7,6 @@ import com.maliitourist.apigestionregions.apigestionregions.models.DomaineActivi
 public interface Domaine_activiteRepository extends JpaRepository<DomaineActivite, Integer> {
     DomaineActivite findByNom(String nom);
 
+    DomaineActivite findByCode(String code);
+
 }

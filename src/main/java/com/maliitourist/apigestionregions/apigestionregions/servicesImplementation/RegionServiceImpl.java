@@ -2,6 +2,7 @@ package com.maliitourist.apigestionregions.apigestionregions.servicesImplementat
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.maliitourist.apigestionregions.apigestionregions.models.Region;
@@ -11,6 +12,7 @@ import com.maliitourist.apigestionregions.apigestionregions.services.RegionServi
 @Service
 public class RegionServiceImpl implements RegionService {
 
+    @Autowired
     RegionRepository repos;
 
     @Override
@@ -47,6 +49,18 @@ public class RegionServiceImpl implements RegionService {
     public Region getRegion(Region a) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public Region getRegionByCode(String code) {
+        // TODO Auto-generated method stub
+        return repos.findByCode(code);
+    }
+
+    @Override
+    public List<Object> getRegionSansPay() {
+        // TODO Auto-generated method stub
+        return repos.RegionsSansPays();
     }
 
 }

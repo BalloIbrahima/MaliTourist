@@ -11,6 +11,9 @@ public interface PaysService {
     // Methode pour la création d'un pays
     Pays savePays(Pays a);
 
+    // Methode pour recuperer le pays à travers le code
+    Pays getPaysByCode(String code);
+
     // Methode pour la recuperation d'un pays à travers le nom
     Pays getPaysByNom(String nom);
 
@@ -22,4 +25,5 @@ public interface PaysService {
 
     // Methode pour la liste des Pays
     List<Pays> getAllPays();
+
 }

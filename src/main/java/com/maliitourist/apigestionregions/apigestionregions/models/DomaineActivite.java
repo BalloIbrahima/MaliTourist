@@ -21,7 +21,7 @@ import lombok.Setter;
 @Entity
 public class DomaineActivite {
     @Id
-    private String code_activite;
+    private String code;
     private String nom;
 
     @JsonIgnore

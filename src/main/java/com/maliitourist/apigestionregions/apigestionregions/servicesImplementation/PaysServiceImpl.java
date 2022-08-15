@@ -44,4 +44,10 @@ public class PaysServiceImpl implements PaysService {
         return repos.findAll();
     }
 
+    @Override
+    public Pays getPaysByCode(String code) {
+        // TODO Auto-generated method stub
+        return repos.findByCode(code);
+    }
+
 }

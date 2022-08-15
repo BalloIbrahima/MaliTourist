@@ -18,4 +18,7 @@ public interface LangueService {
 
     Langue findByLibele(String nom);
 
+    // Methode pour recuperer le pays à travers le code
+    Langue getLangueByCode(String code);
+
 }

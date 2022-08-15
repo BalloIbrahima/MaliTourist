@@ -2,9 +2,15 @@ package com.maliitourist.apigestionregions.apigestionregions.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.maliitourist.apigestionregions.apigestionregions.models.Region;
 
+@Service
 public interface RegionService {
+
+    // methode pour la recuperation d'une region à travers son Id
+    Region getRegionByCode(String code);
 
     // Methode pour la recuperation d'une region
     Region getRegion(Region a);
@@ -21,6 +27,9 @@ public interface RegionService {
     // Methode pour la surpression d'un Region à partir d'un Region
     void deleteRegion(Region a);
 
-    // Methode pour la liste des Regions à partir d'un Region
+    // Methode pour la liste des Regions
     List<Region> getAllRegion();
+
+    // Methode pour la liste des Regions sans pays
+    List<Object> getRegionSansPay();
 }

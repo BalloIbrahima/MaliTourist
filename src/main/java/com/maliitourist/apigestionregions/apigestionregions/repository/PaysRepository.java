@@ -6,4 +6,7 @@ import com.maliitourist.apigestionregions.apigestionregions.models.Pays;
 
 public interface PaysRepository extends JpaRepository<Pays, Integer> {
     Pays findByNom(String nom);
+
+    Pays findByCode(String code);
+
 }
