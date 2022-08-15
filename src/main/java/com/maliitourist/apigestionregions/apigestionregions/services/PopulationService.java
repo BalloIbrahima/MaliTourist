@@ -8,6 +8,8 @@ import com.maliitourist.apigestionregions.apigestionregions.models.Population;
 
 @Service
 public interface PopulationService {
+    Population FindByCode(int code);
+
     Population savePopulation(Population p);
 
     Population updatePopulation(Population p);

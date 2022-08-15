@@ -29,8 +29,8 @@ public class Admin {
     private String nom;
     private String prenom;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "admin")
-    List<Region> region = new ArrayList<>();
+    // @JsonIgnore
+    // @OneToMany(mappedBy = "admin")
+    // List<Region> region = new ArrayList<>();
 
 }

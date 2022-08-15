@@ -3,6 +3,7 @@ package com.maliitourist.apigestionregions.apigestionregions.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -23,6 +24,7 @@ public class Pays {
 
     @Id
     private String code;
+    // @Column(unique = true)
     private String nom;
 
     @JsonIgnore

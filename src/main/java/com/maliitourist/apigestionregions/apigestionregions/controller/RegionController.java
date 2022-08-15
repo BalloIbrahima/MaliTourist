@@ -113,7 +113,7 @@ public class RegionController {
 
         try {
             service.deleteRegion(Region);
-            return ResponseMessage.generateResponse("Ce Region existe déja", HttpStatus.OK, null);
+            return ResponseMessage.generateResponse("Region suprimée!", HttpStatus.OK, null);
 
         } catch (Exception e) {
             return ResponseMessage.generateResponse("Erreur lors de la surpression.", HttpStatus.OK, null);

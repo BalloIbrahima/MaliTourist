@@ -38,4 +38,10 @@ public class PopulationServiceImpl implements PopulationService {
         return Repos.findAll();
     }
 
+    @Override
+    public Population FindByCode(int code) {
+        // TODO Auto-generated method stub
+        return Repos.findByCode(code);
+    }
+
 }

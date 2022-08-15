@@ -48,9 +48,9 @@ public class Region {
     private Langue langue;
     //
 
-    @ManyToOne
-    @JoinColumn(name = "admin")
-    private Admin admin;
+    // @ManyToOne
+    // @JoinColumn(name = "admin")
+    // private Admin admin;
     // Fin des variables
 
 }

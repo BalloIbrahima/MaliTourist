@@ -51,7 +51,7 @@ public class AdminController {
 
         try {
             service.deleteAdmin(Admin);
-            return ResponseMessage.generateResponse("Ce Admin existe déja", HttpStatus.OK, null);
+            return ResponseMessage.generateResponse("Admin suprimer!", HttpStatus.OK, null);
 
         } catch (Exception e) {
             return ResponseMessage.generateResponse("Erreur lors de la surpression.", HttpStatus.OK, null);

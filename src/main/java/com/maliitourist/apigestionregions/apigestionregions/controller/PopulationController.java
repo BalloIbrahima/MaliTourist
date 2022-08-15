@@ -3,8 +3,11 @@ package com.maliitourist.apigestionregions.apigestionregions.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +58,67 @@ public class PopulationController {
         } else {
             return ResponseMessage.generateResponse("Cette region n'existe pas!", HttpStatus.OK, null);
 
+        }
+
+    }
+    // Fin
+
+    // methode pour la mise à jour d'une populaton
+    @PutMapping("/misajour/{codePopulation}")
+    public ResponseEntity<Object> ModifierRegion(@RequestBody Population population,
+            @PathVariable(value = "codePopulation") int code) {
+
+        Population verif_Langue = service.FindByCode(code);
+        if (verif_Langue != null) {
+            Population EnregistreLangue = service.updatePopulation(population);
+            return ResponseMessage.generateResponse("Langue Modifiée avec succes", HttpStatus.OK, EnregistreLangue);
+        } else {
+            return ResponseMessage.generateResponse("Cette langue n'existe pas!", HttpStatus.OK, null);
+        }
+
+    }
+    // Fin
+
+    // methode pour la recuperation d'une population à travers son codedomaine
+    @GetMapping("/{codePopulation}")
+    public ResponseEntity<Object> RecupereLangue(
+            @PathVariable(value = "CodeRegion") int code) {
+
+        Population verif_Langue = service.FindByCode(code);
+        if (verif_Langue != null) {
+            return ResponseMessage.generateResponse("", HttpStatus.OK, verif_Langue);
+        } else {
+            return ResponseMessage.generateResponse("Cett population n'existe pas:", HttpStatus.OK, null);
+        }
+
+    }
+    // Fin
+
+    // methode pour la surpression des domaines
+    @DeleteMapping("/{codePopulation}")
+    public ResponseEntity<Object> SuprimerLangue(
+            @PathVariable(value = "CodePopulation") int code) {
+
+        Population verif_Population = service.FindByCode(code);
+        if (verif_Population != null) {
+            service.deletePopulation(verif_Population);
+            return ResponseMessage.generateResponse("Population Suprime !", HttpStatus.OK, null);
+        } else {
+            return ResponseMessage.generateResponse("Cette Population n'existe pas:", HttpStatus.OK, null);
+        }
+
+    }
+    // Fin
+
+    // methode pour la recupération des domaines
+    @GetMapping("/liste")
+    public ResponseEntity<Object> LesPopulations() {
+
+        try {
+            return ResponseMessage.generateResponse("Liste des populations", HttpStatus.OK,
+                    service.getAllPopulation());
+        } catch (Exception e) {
+            return ResponseMessage.generateResponse("Erreur ", HttpStatus.OK, e.getMessage());
         }
 
     }

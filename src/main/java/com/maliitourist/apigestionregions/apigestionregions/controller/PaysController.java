@@ -21,6 +21,7 @@ import io.swagger.annotations.Api;
 @RequestMapping("/pays")
 @Api(value = "pays", description = "Les actions à réaliser sur la table pays(creation, modification, etc ...).")
 @Controller
+
 public class PaysController {
 
     @Autowired
@@ -31,6 +32,7 @@ public class PaysController {
     public ResponseEntity<Object> CreerPays(@RequestBody Pays pays) {
 
         System.out.println(pays);
+
         Pays verif_pays = service.getPaysByNom(pays.getNom());
         if (verif_pays == null) {
             Pays Enregistrepays = service.savePays(pays);
@@ -43,10 +45,10 @@ public class PaysController {
     // Fin
 
     // methode pour la mise à jour d'un pays
-    @PutMapping("/mettreajour")
-    public ResponseEntity<Object> MiseAJourPays(@RequestBody Pays pays) {
+    @PutMapping("/mettreajour/{codePays}")
+    public ResponseEntity<Object> MiseAJourPays(@RequestBody Pays pays, @PathVariable(value = "CodePays") String code) {
 
-        Pays verif_pays = service.getPaysByNom(pays.getNom());
+        Pays verif_pays = service.getPaysByCode(code);
         if (verif_pays != null) {
             Pays Enregistrepays = service.updatePays(pays);
             return ResponseMessage.generateResponse("Pays modifié avec succes", HttpStatus.OK, Enregistrepays);
@@ -59,16 +61,16 @@ public class PaysController {
     // Fin
 
     // methode pour la surpression d'un pays
-    @DeleteMapping("/suprimer/{nom}")
-    public ResponseEntity<Object> SuprimerPays(@PathVariable String nom) {
+    @DeleteMapping("/{codePays}")
+    public ResponseEntity<Object> SuprimerPays(@PathVariable(value = "CodePays") String code) {
 
-        Pays pays = service.getPaysByNom(nom);
+        Pays pays = service.getPaysByNom(code);
 
         if (pays != null) {
             service.deletePays(pays);
             return ResponseMessage.generateResponse("Pays suprimer", HttpStatus.OK, null);
         } else {
-            return ResponseMessage.generateResponse("Erreur lors de la surpression.", HttpStatus.OK, null);
+            return ResponseMessage.generateResponse("Ce pays n'existe pas!", HttpStatus.OK, null);
         }
 
     }
@@ -79,7 +81,7 @@ public class PaysController {
     public ResponseEntity<Object> ListePays() {
 
         try {
-            return ResponseMessage.generateResponse("La liste de pays:", HttpStatus.OK, service.getAllPays());
+            return ResponseMessage.generateResponse("La liste des pays:", HttpStatus.OK, service.getAllPays());
 
         } catch (Exception e) {
             return ResponseMessage.generateResponse("Erreur lors du retour de la liste.", HttpStatus.OK, null);
