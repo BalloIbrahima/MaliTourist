@@ -40,7 +40,7 @@ public class RegionServiceImpl implements RegionService {
     @Override
     public Region getRegionByNom(String nom) {
         // TODO Auto-generated method stub
-        return null;
+        return repos.findByNom(nom);
     }
 
     @Override

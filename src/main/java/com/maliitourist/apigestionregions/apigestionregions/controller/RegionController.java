@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +27,8 @@ public class RegionController {
     private RegionServiceImpl service;
 
     // methode pour la création d'un Region
-    @GetMapping("{nom}")
-    public ResponseEntity<Object> RecupereRegion(@RequestBody String nom) {
+    @GetMapping("/{nom}")
+    public ResponseEntity<Object> RecupereRegion(@PathVariable(value = "nom") String nom) {
 
         Region verif_Region = service.getRegionByNom(nom);
         if (verif_Region != null) {
@@ -56,7 +57,7 @@ public class RegionController {
     // Fin
 
     // methode pour la mise à jour d'un Region
-    @PutMapping("/mettreajour")
+    @PutMapping("/mettreajour/{id}")
     public ResponseEntity<Object> MiseAJourRegion(@RequestBody Region Region) {
 
         System.out.println(Region);
