@@ -58,7 +58,7 @@ public class Domaine_activiteController {
     // Fin
 
     // methode pour la recuperation d'un domaine à travers son codedomaine
-    @DeleteMapping("/{codeRegion}")
+    @GetMapping("/{codeRegion}")
     public ResponseEntity<Object> RecupereRegion(
             @PathVariable(value = "CodeRegion") String code) {
 

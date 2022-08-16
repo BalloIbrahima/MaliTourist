@@ -1,5 +1,8 @@
 package com.maliitourist.apigestionregions.apigestionregions.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +19,12 @@ import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMess
 import com.maliitourist.apigestionregions.apigestionregions.models.DomaineActivite;
 import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
 import com.maliitourist.apigestionregions.apigestionregions.models.Pays;
+import com.maliitourist.apigestionregions.apigestionregions.models.Population;
 import com.maliitourist.apigestionregions.apigestionregions.models.Region;
 import com.maliitourist.apigestionregions.apigestionregions.services.Domaine_activiteService;
 import com.maliitourist.apigestionregions.apigestionregions.services.LangueService;
 import com.maliitourist.apigestionregions.apigestionregions.services.PaysService;
+import com.maliitourist.apigestionregions.apigestionregions.services.PopulationService;
 import com.maliitourist.apigestionregions.apigestionregions.services.RegionService;
 
 import io.swagger.annotations.Api;
@@ -40,6 +45,9 @@ public class RegionController {
 
     @Autowired
     private Domaine_activiteService Dservice;
+
+    @Autowired
+    private PopulationService populationservice;
 
     // methode pour la création d'un Region
     @GetMapping("/{nom}")
@@ -77,6 +85,18 @@ public class RegionController {
             }
             if (domaine == null) {
                 Dservice.saveDomaineActivite(region.getDomaineActivite());
+            }
+
+            for (int i = 0; i < region.getPopulation().size(); i++) {
+                Population p = populationservice.FindByCode(region.getPopulation().get(i).getCode());
+                if (p == null) {
+                    // recuperation du domaine qui se trouve dans la population et on lui ajoute la
+                    // population courante dans sa liste de population
+                    // on enregistre d'abord la population
+                    Population pp = populationservice.savePopulation(region.getPopulation().get(i));
+                    // region.getPopulation().get(i).getRegion().add(region);
+
+                }
             }
             //
             // après créer la region
