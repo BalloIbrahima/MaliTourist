@@ -17,6 +17,7 @@ import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
 import com.maliitourist.apigestionregions.apigestionregions.services.LangueService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/langue")
 @Api(value = "langue", description = "Les actions à réaliser sur la table langue(creation, modification, etc ...).")
@@ -27,6 +28,7 @@ public class LangueController {
     private LangueService service;
 
     // methode pour la création d'une Langue
+    @ApiOperation(value = "Creation d'une langue.")
     @PostMapping("/creer")
     public ResponseEntity<Object> creerLangue(@RequestBody Langue Langue) {
 
@@ -42,6 +44,7 @@ public class LangueController {
     // Fin
 
     // methode pour la mise à jour d'un langue
+    @ApiOperation(value = "Mis à jour d'une langue.")
     @PutMapping("/misajour/{codeRegion}")
     public ResponseEntity<Object> ModifierRegion(@RequestBody Langue langue,
             @PathVariable(value = "CodeRegion") String code) {
@@ -58,6 +61,7 @@ public class LangueController {
     // Fin
 
     // methode pour la recuperation d'une langue à travers son codedomaine
+    @ApiOperation(value = "Recuperation d'une langue à travers son le codeLangue.")
     @GetMapping("/{codeLangue}")
     public ResponseEntity<Object> RecupereLangue(
             @PathVariable(value = "CodeRegion") String code) {
@@ -73,6 +77,7 @@ public class LangueController {
     // Fin
 
     // methode pour la surpression des domaines
+    @ApiOperation(value = "Modification d'une langue.")
     @DeleteMapping("/{codeLangue}")
     public ResponseEntity<Object> SuprimerLangue(
             @PathVariable(value = "CodeLangue") String code) {
@@ -89,6 +94,7 @@ public class LangueController {
     // Fin
 
     // methode pour la recupération des domaines
+    @ApiOperation(value = "Supression d'une langue.")
     @GetMapping("/liste")
     public ResponseEntity<Object> LesLangues() {
 

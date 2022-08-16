@@ -19,6 +19,7 @@ import com.maliitourist.apigestionregions.apigestionregions.services.PopulationS
 import com.maliitourist.apigestionregions.apigestionregions.services.RegionService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/population")
 @Api(value = "population", description = "Les actions à réaliser sur la table population(creation, modification, etc ...).")
@@ -32,6 +33,7 @@ public class PopulationController {
     RegionService Rservice;
 
     // methode pour la création d'un Population
+    @ApiOperation(value = "Création d'une population.")
     @PostMapping("/creer")
     public ResponseEntity<Object> CreerPopulation(@RequestBody Population Population) {
 
@@ -42,6 +44,7 @@ public class PopulationController {
     // Fin
 
     // methode pour la création d'une Population par rapport à une region
+    @ApiOperation(value = "Création d'une population à travers le code d'une region(On l'ajoute à la region).")
     @PostMapping("/{CodeRegion}/creer")
     public ResponseEntity<Object> CreerPopulationRegion(@PathVariable(value = "CodeRegion") String code,
             @RequestBody Population population) {
@@ -64,6 +67,7 @@ public class PopulationController {
     // Fin
 
     // methode pour la mise à jour d'une populaton
+    @ApiOperation(value = "Modificatio d'une population.")
     @PutMapping("/misajour/{codePopulation}")
     public ResponseEntity<Object> ModifierRegion(@RequestBody Population population,
             @PathVariable(value = "codePopulation") int code) {
@@ -80,6 +84,7 @@ public class PopulationController {
     // Fin
 
     // methode pour la recuperation d'une population à travers son codedomaine
+    @ApiOperation(value = "Recuperation d'une population.")
     @GetMapping("/{codePopulation}")
     public ResponseEntity<Object> RecupereLangue(
             @PathVariable(value = "CodeRegion") int code) {
@@ -95,6 +100,7 @@ public class PopulationController {
     // Fin
 
     // methode pour la surpression des domaines
+    @ApiOperation(value = "Su^pression d'une population.")
     @DeleteMapping("/{codePopulation}")
     public ResponseEntity<Object> SuprimerLangue(
             @PathVariable(value = "CodePopulation") int code) {

@@ -25,6 +25,7 @@ import com.maliitourist.apigestionregions.apigestionregions.services.PopulationS
 import com.maliitourist.apigestionregions.apigestionregions.services.RegionService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/region")
 @Api(value = "region", description = "Les actions à réaliser sur la table region(creation, modification, etc ...).")
@@ -47,6 +48,7 @@ public class RegionController {
     private PopulationService populationservice;
 
     // methode pour la création d'un Region
+    @ApiOperation(value = "Recuperation d'une Region.")
     @GetMapping("/{nom}")
     public ResponseEntity<Object> RecupereRegion(@PathVariable(value = "nom") String nom) {
 
@@ -60,7 +62,8 @@ public class RegionController {
     }
     // Fin
 
-    // methode pour la création d'un Region
+    // methode pour la création d'une Region
+    @ApiOperation(value = "Création d'une Region.")
     @PostMapping("/creer")
     public ResponseEntity<Object> CreerRegion(@RequestBody Region region) {
 
@@ -106,7 +109,8 @@ public class RegionController {
     }
     // Fin
 
-    // methode pour la mise à jour d'un Region
+    // methode pour la mise à jour d'une Region
+    @ApiOperation(value = "Mis à jour d'une Region.")
     @PutMapping("/mettreajour/{CodeRegion}")
     public ResponseEntity<Object> MiseAJourRegion(@RequestBody Region region,
             @PathVariable(value = "CodeRegion") String code) {
@@ -124,9 +128,12 @@ public class RegionController {
     }
     // Fin
 
-    // methode pour la surpression d'un Region
-    @DeleteMapping("/suprimer")
-    public ResponseEntity<Object> SuprimerRegion(@RequestBody Region Region) {
+    // methode pour la surpression d'une Region
+    @ApiOperation(value = "Supression d'une Region.")
+    @DeleteMapping("/{codeRegion}")
+    public ResponseEntity<Object> SuprimerRegion(@PathVariable(value = "codeRegion") String code) {
+
+        Region Region = service.getRegionByCode(code);
 
         try {
             service.deleteRegion(Region);
@@ -140,6 +147,7 @@ public class RegionController {
     // Fin
 
     // methode pour la liste des Region
+    @ApiOperation(value = "Recuperation de la liste des Regions avec pays.")
     @GetMapping("/liste")
     public ResponseEntity<Object> ListeRegion() {
 
@@ -154,6 +162,7 @@ public class RegionController {
     // Fin
 
     // methode pour la liste des Region
+    @ApiOperation(value = "Recuperation de la liste des Regions sans pays.")
     @GetMapping("/listeSansPays")
     public ResponseEntity<Object> ListeRegionSans() {
 

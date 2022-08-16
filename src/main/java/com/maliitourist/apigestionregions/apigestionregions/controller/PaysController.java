@@ -17,6 +17,7 @@ import com.maliitourist.apigestionregions.apigestionregions.models.Pays;
 import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.PaysServiceImpl;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/pays")
 @Api(value = "pays", description = "Les actions à réaliser sur la table pays(creation, modification, etc ...).")
@@ -28,6 +29,7 @@ public class PaysController {
     private PaysServiceImpl service;
 
     // methode pour la création d'un pays
+    @ApiOperation(value = "Création d'un pays.")
     @PostMapping("/creer")
     public ResponseEntity<Object> CreerPays(@RequestBody Pays pays) {
 
@@ -38,11 +40,11 @@ public class PaysController {
         } else {
             return ResponseMessage.generateResponse("Ce pays existe déja", HttpStatus.OK, verif_pays);
         }
-
     }
     // Fin
 
     // methode pour la mise à jour d'un pays
+    @ApiOperation(value = "Modification d'un pays.")
     @PutMapping("/mettreajour/{codePays}")
     public ResponseEntity<Object> MiseAJourPays(@RequestBody Pays pays, @PathVariable(value = "CodePays") String code) {
 
@@ -59,6 +61,7 @@ public class PaysController {
     // Fin
 
     // methode pour la surpression d'un pays
+    @ApiOperation(value = "Recuperation d'un pays.")
     @DeleteMapping("/{codePays}")
     public ResponseEntity<Object> SuprimerPays(@PathVariable(value = "CodePays") String code) {
 
@@ -75,6 +78,7 @@ public class PaysController {
     // Fin
 
     // methode pour la liste des pays
+    @ApiOperation(value = "Récuperation  de la liste des pays.")
     @GetMapping("/liste")
     public ResponseEntity<Object> ListePays() {
 

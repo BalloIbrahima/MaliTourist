@@ -17,6 +17,7 @@ import com.maliitourist.apigestionregions.apigestionregions.models.DomaineActivi
 import com.maliitourist.apigestionregions.apigestionregions.services.Domaine_activiteService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/domaine")
 @Api(value = "domaine", description = "Les actions à réaliser sur le domaine.")
@@ -27,8 +28,9 @@ public class Domaine_activiteController {
     private Domaine_activiteService service;
 
     // methode pour la création d'un domaine
+    @ApiOperation(value = "Création d'un Domaine.")
     @PostMapping("/creer")
-    public ResponseEntity<Object> creerRegion(@RequestBody DomaineActivite domaine) {
+    public ResponseEntity<Object> creerDomaine(@RequestBody DomaineActivite domaine) {
 
         DomaineActivite verif_Domaine = service.FindByNom(domaine.getNom());
         if (verif_Domaine == null) {
@@ -42,9 +44,10 @@ public class Domaine_activiteController {
     // Fin
 
     // methode pour la mise à jour d'un domaine
-    @PutMapping("/misajour/{codeRegion}")
-    public ResponseEntity<Object> ModifierRegion(@RequestBody DomaineActivite domaine,
-            @PathVariable(value = "CodeRegion") String code) {
+    @ApiOperation(value = "Mise à jour d'un domaine.")
+    @PutMapping("/misajour/{CodeDomaine}")
+    public ResponseEntity<Object> ModifierDomaine(@RequestBody DomaineActivite domaine,
+            @PathVariable(value = "CodeDomaine") String code) {
 
         DomaineActivite verif_Domaine = service.getDomaineByCode(code);
         if (verif_Domaine != null) {
@@ -58,9 +61,10 @@ public class Domaine_activiteController {
     // Fin
 
     // methode pour la recuperation d'un domaine à travers son codedomaine
-    @GetMapping("/{codeRegion}")
-    public ResponseEntity<Object> RecupereRegion(
-            @PathVariable(value = "CodeRegion") String code) {
+    @ApiOperation(value = "Récuperation d'un domaine.")
+    @GetMapping("/{codeDomaine}")
+    public ResponseEntity<Object> RecupereDomaine(
+            @PathVariable(value = "CodeDomaine") String code) {
 
         DomaineActivite verif_Domaine = service.getDomaineByCode(code);
         if (verif_Domaine != null) {
@@ -73,8 +77,9 @@ public class Domaine_activiteController {
     // Fin
 
     // methode pour la surpression des domaines
+    @ApiOperation(value = "Supression d'un domaine.")
     @DeleteMapping("/{codeDomaine}")
-    public ResponseEntity<Object> SuprimerRegion(
+    public ResponseEntity<Object> SuprimerDomaine(
             @PathVariable(value = "CodeDomaine") String code) {
 
         DomaineActivite verif_Domaine = service.getDomaineByCode(code);
@@ -89,8 +94,9 @@ public class Domaine_activiteController {
     // Fin
 
     // methode pour la recupération des domaines
+    @ApiOperation(value = "Récuperation de la liste des domaines.")
     @GetMapping("/liste")
-    public ResponseEntity<Object> LesRegions() {
+    public ResponseEntity<Object> LesDomaines() {
 
         try {
             return ResponseMessage.generateResponse("Liste des domaines", HttpStatus.OK,
