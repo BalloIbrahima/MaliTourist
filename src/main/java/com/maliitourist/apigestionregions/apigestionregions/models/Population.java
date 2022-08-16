@@ -31,7 +31,7 @@ public class Population {
     private Long annee;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "population")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "population")
     List<Region> region = new ArrayList<>();
 
 }

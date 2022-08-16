@@ -1,8 +1,5 @@
 package com.maliitourist.apigestionregions.apigestionregions.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,7 +65,7 @@ public class RegionController {
     public ResponseEntity<Object> CreerRegion(@RequestBody Region region) {
 
         Region verif_RegionName = service.getRegionByNom(region.getNom());
-        Region verif_RegionCode = service.getRegionByNom(region.getCode());
+        Region verif_RegionCode = service.getRegionByCode(region.getCode());
 
         if (verif_RegionCode == null && verif_RegionName == null) {
             // verification de l'existance du pays, de la langue et du domaine
@@ -93,7 +90,7 @@ public class RegionController {
                     // recuperation du domaine qui se trouve dans la population et on lui ajoute la
                     // population courante dans sa liste de population
                     // on enregistre d'abord la population
-                    Population pp = populationservice.savePopulation(region.getPopulation().get(i));
+                    populationservice.savePopulation(region.getPopulation().get(i));
                     // region.getPopulation().get(i).getRegion().add(region);
 
                 }

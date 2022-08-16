@@ -31,8 +31,6 @@ public class PaysController {
     @PostMapping("/creer")
     public ResponseEntity<Object> CreerPays(@RequestBody Pays pays) {
 
-        System.out.println(pays);
-
         Pays verif_pays = service.getPaysByNom(pays.getNom());
         if (verif_pays == null) {
             Pays Enregistrepays = service.savePays(pays);
