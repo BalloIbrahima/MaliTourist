@@ -4,20 +4,20 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.maliitourist.apigestionregions.apigestionregions.models.User;
+import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
 
 @Service
 public interface AdminService {
     // Methode pour la création d'un admin
-    User saveAdmin(User a);
+    Admin saveAdmin(Admin a);
 
     // Methode pour la modification d'un admin
-    User updateAdmin(User a);
+    Admin updateAdmin(Admin a);
 
     // Methode pour la surpression d'un admin à partir d'un admin
-    void deleteAdmin(User a);
+    void deleteAdmin(Admin a);
 
     // Methode pour la liste des admins à partir d'un admin
-    List<User> getAllAdmin();
+    List<Admin> getAllAdmin();
 
 }

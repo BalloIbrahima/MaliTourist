@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.maliitourist.apigestionregions.apigestionregions.models.User;
+import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
 import com.maliitourist.apigestionregions.apigestionregions.repository.AdminRepository;
 import com.maliitourist.apigestionregions.apigestionregions.services.AdminService;
 
@@ -16,25 +16,25 @@ public class AdminServiceImpl implements AdminService {
     AdminRepository repos;
 
     @Override
-    public User saveAdmin(User a) {
+    public Admin saveAdmin(Admin a) {
         // TODO Auto-generated method stub
         return repos.save(a);
     }
 
     @Override
-    public User updateAdmin(User a) {
+    public Admin updateAdmin(Admin a) {
         // TODO Auto-generated method stub
         return repos.save(a);
     }
 
     @Override
-    public void deleteAdmin(User a) {
+    public void deleteAdmin(Admin a) {
         // TODO Auto-generated method stub
         repos.delete(a);
     }
 
     @Override
-    public List<User> getAllAdmin() {
+    public List<Admin> getAllAdmin() {
         // TODO Auto-generated method stub
         return repos.findAll();
     }

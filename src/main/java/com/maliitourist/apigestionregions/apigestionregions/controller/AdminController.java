@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMessage;
-import com.maliitourist.apigestionregions.apigestionregions.models.User;
+import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
 import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.AdminServiceImpl;
 
 import io.swagger.annotations.Api;
@@ -29,9 +29,9 @@ public class AdminController {
     // methode pour la création d'un Admin
     @ApiOperation(value = "Création d'un administrateur.")
     @PostMapping("/creer")
-    public ResponseEntity<Object> CreerAdmin(@RequestBody User Admin) {
+    public ResponseEntity<Object> CreerAdmin(@RequestBody Admin Admin) {
 
-        User EnregistreAdmin = service.saveAdmin(Admin);
+        Admin EnregistreAdmin = service.saveAdmin(Admin);
         return ResponseMessage.generateResponse("Admin ajouté avec succes", HttpStatus.OK, EnregistreAdmin);
 
     }
@@ -40,9 +40,9 @@ public class AdminController {
     // methode pour la mise à jour d'un Admin
     @ApiOperation(value = "Mis à jour d'un administrateur.")
     @PutMapping("/mettreajour")
-    public ResponseEntity<Object> MiseAJourAdmin(@RequestBody User Admin) {
+    public ResponseEntity<Object> MiseAJourAdmin(@RequestBody Admin Admin) {
 
-        User EnregistreAdmin = service.updateAdmin(Admin);
+        Admin EnregistreAdmin = service.updateAdmin(Admin);
         return ResponseMessage.generateResponse("Admin modifié avec succes", HttpStatus.OK, EnregistreAdmin);
 
     }
@@ -51,7 +51,7 @@ public class AdminController {
     // methode pour la surpression d'un Admin
     @ApiOperation(value = "Surpression d'un administrateur.")
     @DeleteMapping("/suprimer")
-    public ResponseEntity<Object> SuprimerAdmin(@RequestBody User Admin) {
+    public ResponseEntity<Object> SuprimerAdmin(@RequestBody Admin Admin) {
 
         try {
             service.deleteAdmin(Admin);
