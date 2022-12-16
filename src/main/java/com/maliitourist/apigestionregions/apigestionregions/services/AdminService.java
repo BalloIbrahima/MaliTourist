@@ -20,4 +20,7 @@ public interface AdminService {
     // Methode pour la liste des admins à partir d'un admin
     List<Admin> getAllAdmin();
 
+    // Methode pour retrouver un admin a travers son username
+    Admin getByUsername(String username);
+
 }

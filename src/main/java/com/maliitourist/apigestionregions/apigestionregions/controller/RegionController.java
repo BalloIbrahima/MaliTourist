@@ -49,7 +49,7 @@ public class RegionController {
 
     // methode pour la création d'un Region
     @ApiOperation(value = "Recuperation d'une Region.")
-    @GetMapping("/{nom}")
+    @GetMapping("/get/{nom}")
     public ResponseEntity<Object> RecupereRegion(@PathVariable(value = "nom") String nom) {
 
         Region verif_Region = service.getRegionByNom(nom);
@@ -148,7 +148,7 @@ public class RegionController {
 
     // methode pour la liste des Region
     @ApiOperation(value = "Recuperation de la liste des Regions avec pays.")
-    @GetMapping("/liste")
+    @GetMapping("/get/liste")
     public ResponseEntity<Object> ListeRegion() {
 
         try {
@@ -163,7 +163,7 @@ public class RegionController {
 
     // methode pour la liste des Region
     @ApiOperation(value = "Recuperation de la liste des Regions sans pays.")
-    @GetMapping("/listeSansPays")
+    @GetMapping("/get/listeSansPays")
     public ResponseEntity<Object> ListeRegionSans() {
 
         try {

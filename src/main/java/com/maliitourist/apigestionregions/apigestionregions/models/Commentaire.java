@@ -1,13 +1,12 @@
 package com.maliitourist.apigestionregions.apigestionregions.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,21 +15,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class DomaineActivite {
+public class Commentaire {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String code;
-    private String nom;
+    @Lob
+    private String contenu;
+
 
     @JsonIgnore
-    @OneToMany(mappedBy = "domaineActivite")
-    List<Region> region = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "region")
+    private Region region;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "pays")
+    private Pays pays;
+
+
+
+    
 }

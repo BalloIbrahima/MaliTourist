@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.maliitourist.apigestionregions.apigestionregions.configuration.SpringSecurity.SpringSecurity;
 import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
 import com.maliitourist.apigestionregions.apigestionregions.repository.AdminRepository;
 import com.maliitourist.apigestionregions.apigestionregions.services.AdminService;
@@ -15,9 +16,14 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     AdminRepository repos;
 
+    @Autowired
+    SpringSecurity security;
+
     @Override
     public Admin saveAdmin(Admin a) {
         // TODO Auto-generated method stub
+
+        a.setPassword(security.passwordEncoder().encode(a.getPassword()));
         return repos.save(a);
     }
 
@@ -37,6 +43,17 @@ public class AdminServiceImpl implements AdminService {
     public List<Admin> getAllAdmin() {
         // TODO Auto-generated method stub
         return repos.findAll();
+    }
+
+    @Override
+    public Admin getByUsername(String username) {
+        // TODO Auto-generated method stub
+        try {
+            return repos.findByUsername(username).get();
+        } catch (Exception e) {
+            // TODO: handle exception
+            return null;
+        }
     }
 
 }

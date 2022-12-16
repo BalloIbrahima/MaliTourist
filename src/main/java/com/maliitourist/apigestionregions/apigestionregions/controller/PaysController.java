@@ -62,7 +62,7 @@ public class PaysController {
 
     // methode pour la surpression d'un pays
     @ApiOperation(value = "Recuperation d'un pays.")
-    @DeleteMapping("/{codePays}")
+    @DeleteMapping("/get/{codePays}")
     public ResponseEntity<Object> SuprimerPays(@PathVariable(value = "CodePays") String code) {
 
         Pays pays = service.getPaysByNom(code);
@@ -79,7 +79,7 @@ public class PaysController {
 
     // methode pour la liste des pays
     @ApiOperation(value = "Récuperation  de la liste des pays.")
-    @GetMapping("/liste")
+    @GetMapping("/get/liste")
     public ResponseEntity<Object> ListePays() {
 
         try {
