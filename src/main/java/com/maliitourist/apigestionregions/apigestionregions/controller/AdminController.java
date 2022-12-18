@@ -1,9 +1,19 @@
 package com.maliitourist.apigestionregions.apigestionregions.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +21,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.maliitourist.apigestionregions.apigestionregions.configuration.SpringSecurity.Jwt.JwtUtils;
+import com.maliitourist.apigestionregions.apigestionregions.configuration.SpringSecurity.Services.UserDetailsImpl;
 import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMessage;
 import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
+import com.maliitourist.apigestionregions.apigestionregions.payload.request.LoginRequest;
+import com.maliitourist.apigestionregions.apigestionregions.payload.response.JwtResponse;
+import com.maliitourist.apigestionregions.apigestionregions.repository.RoleRepository;
 import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.AdminServiceImpl;
 
 import io.swagger.annotations.Api;
@@ -20,8 +35,27 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value = "admin", description = "Les actions de l'adlinistrateur")
 @RequestMapping("/admin")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Controller
 public class AdminController {
+
+    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+    
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    PasswordEncoder encoder;
+
+    @Autowired
+    JwtUtils jwtUtils;
+    
+    // @Autowired
+    // private OAuth2AuthorizedClientService loadAuthorizedClientService;
+
 
     @Autowired
     private AdminServiceImpl service;
@@ -33,6 +67,28 @@ public class AdminController {
 
         Admin EnregistreAdmin = service.saveAdmin(Admin);
         return ResponseMessage.generateResponse("Admin ajouté avec succes", HttpStatus.OK, EnregistreAdmin);
+
+    }
+    // Fin
+
+    // methode pour le login d'un Admin
+    @ApiOperation(value = "Le login d'un Administrateur.")
+    @PostMapping("/login")
+    public ResponseEntity<Object> Login(@RequestBody LoginRequest loginRequest) {
+
+        Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+            .map(item -> item.getAuthority())
+            .collect(Collectors.toList());
+
+        //Admin EnregistreAdmin = service.saveAdmin(Admin);
+        return ResponseMessage.generateResponse("ok", HttpStatus.OK, new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getNom(), userDetails.getPrenom(), roles));
 
     }
     // Fin

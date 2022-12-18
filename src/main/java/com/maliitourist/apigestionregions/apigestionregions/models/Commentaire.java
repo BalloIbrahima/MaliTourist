@@ -26,6 +26,10 @@ public class Commentaire {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String username;
+
+    private String email;
+
     @Lob
     private String contenu;
 

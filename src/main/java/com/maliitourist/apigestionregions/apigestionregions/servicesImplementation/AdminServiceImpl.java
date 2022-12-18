@@ -20,11 +20,43 @@ public class AdminServiceImpl implements AdminService {
     SpringSecurity security;
 
     @Override
-    public Admin saveAdmin(Admin a) {
+    public Admin saveAdmin(Admin user) {
         // TODO Auto-generated method stub
 
-        a.setPassword(security.passwordEncoder().encode(a.getPassword()));
-        return repos.save(a);
+
+        // Create new user's account
+        // User user = new User(signUpRequest.getUsername(),
+        // signUpRequest.getEmail(),
+        // encoder.encode(signUpRequest.getPassword()));
+        // log.info("Utilisateur crée" + user);
+        // Set<String> strRoles = signUpRequest.getRole();
+        // Set<Role> roles = new HashSet<>();
+
+        // if (strRoles == null) {
+        // Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+        //     .orElseThrow(() -> new RuntimeException("Erreur: Role nom trouver."));
+        // log.info("role non trouvé" + userRole);
+        // roles.add(userRole);
+        // } else {
+        // strRoles.forEach(role -> {
+        //     switch (role) {
+        //     case "admin":
+        //         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+        //             .orElseThrow(() -> new RuntimeException("Erreur: Role nom trouver."));
+        //         roles.add(adminRole);
+        //         break;
+        //     default:
+        //         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+        //             .orElseThrow(() -> new RuntimeException("Erreur: Role nom trouver."));
+        //         roles.add(userRole);
+        //     }
+        // });
+        // }
+
+        //user.setRoles(roles);
+        return repos.save(user);
+        // log.info("Utilisateur crée " + user.getUsername());
+
     }
 
     @Override

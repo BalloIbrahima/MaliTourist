@@ -61,6 +61,8 @@ public class SpringSecurity {
             // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .authorizeRequests().antMatchers("/region/get/**").permitAll()
             .antMatchers("/pays/get/**").permitAll()
+            .antMatchers("/admin/login").permitAll()
+
             .anyRequest().authenticated();
 
         http.formLogin();
