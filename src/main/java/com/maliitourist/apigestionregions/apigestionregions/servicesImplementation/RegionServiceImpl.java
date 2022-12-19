@@ -2,7 +2,11 @@ package com.maliitourist.apigestionregions.apigestionregions.servicesImplementat
 
 import java.util.List;
 
+import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMessage;
+import com.maliitourist.apigestionregions.apigestionregions.models.Pays;
+import com.maliitourist.apigestionregions.apigestionregions.repository.PaysRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.maliitourist.apigestionregions.apigestionregions.models.Region;
@@ -14,6 +18,8 @@ public class RegionServiceImpl implements RegionService {
 
     @Autowired
     RegionRepository repos;
+    @Autowired
+    PaysRepository paysRepository;
 
     @Override
     public Region saveRegion(Region a) {
@@ -48,6 +54,17 @@ public class RegionServiceImpl implements RegionService {
     @Override
     public Region getRegion(Region a) {
         // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Object postRegion(Region region, String codePays) {
+        if (paysRepository.findByCode(codePays) == null){
+            return ResponseMessage.generateResponse("Ce Pays n'existe pas", HttpStatus.OK, null);
+        }else {
+            Pays pays = paysRepository.findByCode(codePays);
+            region.setPays(pays);
+        }
         return null;
     }
 

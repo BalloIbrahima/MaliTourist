@@ -108,8 +108,10 @@ public class RegionController {
 
     }
     // Fin
-
     // methode pour la mise à jour d'une Region
+
+
+
     @ApiOperation(value = "Mis à jour d'une Region.")
     @PutMapping("/mettreajour/{CodeRegion}")
     public ResponseEntity<Object> MiseAJourRegion(@RequestBody Region region,
@@ -145,8 +147,9 @@ public class RegionController {
 
     }
     // Fin
-
     // methode pour la liste des Region
+
+
     @ApiOperation(value = "Recuperation de la liste des Regions avec pays.")
     @GetMapping("/liste")
     public ResponseEntity<Object> ListeRegion() {

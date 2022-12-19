@@ -3,10 +3,7 @@ package com.maliitourist.apigestionregions.apigestionregions.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,7 +19,9 @@ import lombok.Setter;
 @Entity
 public class Pays {
 
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String code;
     // @Column(unique = true)
     private String nom;

@@ -13,7 +13,9 @@ public interface RegionService {
     Region getRegionByCode(String code);
 
     // Methode pour la recuperation d'une region
-    Region getRegion(Region a);
+    Region getRegion(Region an);
+    //ajouter une region à partir d'un pays
+    Object postRegion(Region region, String codePays);
 
     // Methode pour la création d'une region
     Region saveRegion(Region a);
