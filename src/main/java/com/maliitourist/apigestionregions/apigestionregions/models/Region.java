@@ -1,15 +1,12 @@
 package com.maliitourist.apigestionregions.apigestionregions.models;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +27,10 @@ public class Region {
 
     private int superficie;
 
+    private String desciption;
+
+    private File photo;
+
     @ManyToOne
     @JoinColumn(name = "pays")
     private Pays pays;
@@ -46,6 +47,14 @@ public class Region {
     @ManyToOne
     @JoinColumn(name = "langue")
     private Langue langue;
+
+    @JsonIgnore
+    @OneToMany
+    List<LieuTouristiques> lieuTouristiques = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany
+    List<Commentaire> commentaires = new ArrayList<>();
     //
 
     // @ManyToOne
