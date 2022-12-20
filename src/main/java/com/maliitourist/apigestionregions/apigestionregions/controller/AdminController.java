@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,23 +19,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.maliitourist.apigestionregions.apigestionregions.configuration.SpringSecurity.Jwt.JwtUtils;
 import com.maliitourist.apigestionregions.apigestionregions.configuration.SpringSecurity.Services.UserDetailsImpl;
-import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMessage;
+import com.maliitourist.apigestionregions.apigestionregions.message.request.LoginRequest;
+import com.maliitourist.apigestionregions.apigestionregions.message.response.JwtResponse;
+import com.maliitourist.apigestionregions.apigestionregions.message.response.ResponseMessage;
 import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
-import com.maliitourist.apigestionregions.apigestionregions.payload.request.LoginRequest;
-import com.maliitourist.apigestionregions.apigestionregions.payload.response.JwtResponse;
 import com.maliitourist.apigestionregions.apigestionregions.repository.RoleRepository;
 import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.AdminServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "admin", description = "Les actions de l'adlinistrateur")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
+@Api(value = "admin", description = "Les actions de l'administrateur")
 @RequestMapping("/admin")
-@CrossOrigin(origins = "*", maxAge = 3600)
-@Controller
+@RestController
 public class AdminController {
 
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);

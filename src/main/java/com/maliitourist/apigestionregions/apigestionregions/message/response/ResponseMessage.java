@@ -1,4 +1,4 @@
-package com.maliitourist.apigestionregions.apigestionregions.message;
+package com.maliitourist.apigestionregions.apigestionregions.message.response;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license

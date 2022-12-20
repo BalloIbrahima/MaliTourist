@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMessage;
+import com.maliitourist.apigestionregions.apigestionregions.message.response.ResponseMessage;
 import com.maliitourist.apigestionregions.apigestionregions.models.Population;
 import com.maliitourist.apigestionregions.apigestionregions.models.Region;
 import com.maliitourist.apigestionregions.apigestionregions.services.PopulationService;
@@ -21,11 +21,10 @@ import com.maliitourist.apigestionregions.apigestionregions.services.RegionServi
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RequestMapping("/population")
 @Api(value = "population", description = "Les actions à réaliser sur la table population(creation, modification, etc ...).")
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class PopulationController {
 
     @Autowired

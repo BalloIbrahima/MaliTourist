@@ -1,4 +1,4 @@
-package com.maliitourist.apigestionregions.apigestionregions.payload.response;
+package com.maliitourist.apigestionregions.apigestionregions.message.response;
 
 import java.util.List;
 

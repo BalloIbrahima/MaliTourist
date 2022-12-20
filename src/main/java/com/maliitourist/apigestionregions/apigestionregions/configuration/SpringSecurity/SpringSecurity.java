@@ -62,10 +62,11 @@ public class SpringSecurity {
             .authorizeRequests().antMatchers("/region/get/**").permitAll()
             .antMatchers("/pays/get/**").permitAll()
             .antMatchers("/admin/login").permitAll()
+            .antMatchers("/login").permitAll()
 
             .anyRequest().authenticated();
 
-        http.formLogin();
+        //http.formLogin();
         // http.oauth2Login();
         http.authenticationProvider(authenticationProvider());
 
