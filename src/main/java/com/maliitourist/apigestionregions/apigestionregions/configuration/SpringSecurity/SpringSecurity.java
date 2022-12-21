@@ -62,7 +62,8 @@ public class SpringSecurity {
             .authorizeRequests().antMatchers("/region/get/**").permitAll()
             .antMatchers("/pays/get/**").permitAll()
             .antMatchers("/admin/login").permitAll()
-            .antMatchers("/login").permitAll()
+            //.antMatchers("/logout").permitAll()
+            .antMatchers("/swagger").permitAll()
 
             .anyRequest().authenticated();
 

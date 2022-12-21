@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -61,6 +62,7 @@ public class AdminController {
     private AdminServiceImpl service;
 
     // methode pour la création d'un Admin
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Création d'un administrateur.")
     @PostMapping("/creer")
     public ResponseEntity<Object> CreerAdmin(@RequestBody Admin Admin) {
@@ -94,6 +96,7 @@ public class AdminController {
     // Fin
 
     // methode pour la mise à jour d'un Admin
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Mis à jour d'un administrateur.")
     @PutMapping("/mettreajour")
     public ResponseEntity<Object> MiseAJourAdmin(@RequestBody Admin Admin) {
@@ -105,6 +108,7 @@ public class AdminController {
     // Fin
 
     // methode pour la surpression d'un Admin
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Surpression d'un administrateur.")
     @DeleteMapping("/suprimer")
     public ResponseEntity<Object> SuprimerAdmin(@RequestBody Admin Admin) {
@@ -122,8 +126,9 @@ public class AdminController {
 
     // methode pour la liste des Admin
     @ApiOperation(value = "Récuperation de la liste des administrateurs.")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     @GetMapping("/liste")
-    public ResponseEntity<Object> ListeAdmin() {
+    public ResponseEntity<Object> ListeAdmin(Authentication authentication) {
 
         try {
             return ResponseMessage.generateResponse("La liste des admins:", HttpStatus.OK, service.getAllAdmin());

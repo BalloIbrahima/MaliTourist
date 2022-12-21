@@ -26,8 +26,9 @@ public class AdminServiceImpl implements AdminService {
 
         // Create new user's account
         // User user = new User(signUpRequest.getUsername(),
-        // signUpRequest.getEmail(),
-        // encoder.encode(signUpRequest.getPassword()));
+        //     //signUpRequest.getEmail(),
+        //     encoder.encode(signUpRequest.getPassword()))
+        //     ;
         // log.info("Utilisateur crée" + user);
         // Set<String> strRoles = signUpRequest.getRole();
         // Set<Role> roles = new HashSet<>();
@@ -53,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
         // });
         // }
 
-        //user.setRoles(roles);
+        // user.setRoles(roles);
         return repos.save(user);
         // log.info("Utilisateur crée " + user.getUsername());
 
