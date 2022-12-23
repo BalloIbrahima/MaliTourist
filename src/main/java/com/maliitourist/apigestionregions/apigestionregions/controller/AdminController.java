@@ -1,6 +1,8 @@
 package com.maliitourist.apigestionregions.apigestionregions.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.*;
@@ -25,9 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.maliitourist.apigestionregions.apigestionregions.configuration.SpringSecurity.Jwt.JwtUtils;
 import com.maliitourist.apigestionregions.apigestionregions.configuration.SpringSecurity.Services.UserDetailsImpl;
 import com.maliitourist.apigestionregions.apigestionregions.message.request.LoginRequest;
+import com.maliitourist.apigestionregions.apigestionregions.message.request.SignupRequest;
 import com.maliitourist.apigestionregions.apigestionregions.message.response.JwtResponse;
 import com.maliitourist.apigestionregions.apigestionregions.message.response.ResponseMessage;
 import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
+import com.maliitourist.apigestionregions.apigestionregions.models.ERole;
+import com.maliitourist.apigestionregions.apigestionregions.models.Role;
+import com.maliitourist.apigestionregions.apigestionregions.repository.AdminRepository;
 import com.maliitourist.apigestionregions.apigestionregions.repository.RoleRepository;
 import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.AdminServiceImpl;
 
@@ -61,14 +67,53 @@ public class AdminController {
     @Autowired
     private AdminServiceImpl service;
 
+    @Autowired
+    private AdminRepository adminRepository;
+
     // methode pour la création d'un Admin
-    @PreAuthorize ("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize ("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Création d'un administrateur.")
     @PostMapping("/creer")
-    public ResponseEntity<Object> CreerAdmin(@RequestBody Admin Admin) {
+    public ResponseEntity<Object> CreerAdmin(@RequestBody SignupRequest signUpRequest) {
+        if (adminRepository.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseMessage.generateResponse("Erreur: Cet nom d'utilisateur existe déjà!", HttpStatus.BAD_REQUEST, null);
+        }else{
+            Admin admin=new Admin();
+            admin.setNom(signUpRequest.getNom());
+            admin.setPrenom(signUpRequest.getPrenom());
+            admin.setUsername(signUpRequest.getUsername());
+            admin.setPassword(encoder.encode(signUpRequest.getPassword()));
 
-        Admin EnregistreAdmin = service.saveAdmin(Admin);
-        return ResponseMessage.generateResponse("Admin ajouté avec succes", HttpStatus.OK, EnregistreAdmin);
+
+            ///recuperation des roles
+            Set<String> strRoles = signUpRequest.getRole();
+            
+            Set<Role> roles = new HashSet<>();
+
+            if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Erreur: Role nom trouver."));
+            log.info("role non trouvé" + userRole);
+            roles.add(userRole);
+            } else {
+                strRoles.forEach(role -> {
+                    switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                            .orElseThrow(() -> new RuntimeException("Erreur: Role nom trouver."));
+                        roles.add(adminRole);
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                            .orElseThrow(() -> new RuntimeException("Erreur: Role nom trouver."));
+                        roles.add(userRole);
+                    }
+                });
+            }
+
+            admin.setRoles(roles);
+            return ResponseMessage.generateResponse("Admin ajouté avec succes", HttpStatus.OK,service.saveAdmin(admin));
+        }
 
     }
     // Fin
