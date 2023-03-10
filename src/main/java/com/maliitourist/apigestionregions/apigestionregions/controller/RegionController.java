@@ -3,7 +3,7 @@ package com.maliitourist.apigestionregions.apigestionregions.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMessage;
+import com.maliitourist.apigestionregions.apigestionregions.message.response.ResponseMessage;
 import com.maliitourist.apigestionregions.apigestionregions.models.DomaineActivite;
 import com.maliitourist.apigestionregions.apigestionregions.models.Langue;
 import com.maliitourist.apigestionregions.apigestionregions.models.Pays;
@@ -27,9 +28,10 @@ import com.maliitourist.apigestionregions.apigestionregions.services.RegionServi
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RequestMapping("/region")
 @Api(value = "region", description = "Les actions à réaliser sur la table region(creation, modification, etc ...).")
-@Controller
+@RestController
 public class RegionController {
 
     @Autowired
@@ -49,7 +51,7 @@ public class RegionController {
 
     // methode pour la création d'un Region
     @ApiOperation(value = "Recuperation d'une Region.")
-    @GetMapping("/{nom}")
+    @GetMapping("/get/{nom}")
     public ResponseEntity<Object> RecupereRegion(@PathVariable(value = "nom") String nom) {
 
         Region verif_Region = service.getRegionByNom(nom);
@@ -148,7 +150,7 @@ public class RegionController {
 
     // methode pour la liste des Region
     @ApiOperation(value = "Recuperation de la liste des Regions avec pays.")
-    @GetMapping("/liste")
+    @GetMapping("/get/liste")
     public ResponseEntity<Object> ListeRegion() {
 
         try {
@@ -163,7 +165,7 @@ public class RegionController {
 
     // methode pour la liste des Region
     @ApiOperation(value = "Recuperation de la liste des Regions sans pays.")
-    @GetMapping("/listeSansPays")
+    @GetMapping("/get/listeSansPays")
     public ResponseEntity<Object> ListeRegionSans() {
 
         try {

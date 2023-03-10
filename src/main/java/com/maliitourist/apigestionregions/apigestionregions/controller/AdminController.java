@@ -1,43 +1,147 @@
 package com.maliitourist.apigestionregions.apigestionregions.controller;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMessage;
+import com.maliitourist.apigestionregions.apigestionregions.configuration.SpringSecurity.Jwt.JwtUtils;
+import com.maliitourist.apigestionregions.apigestionregions.configuration.SpringSecurity.Services.UserDetailsImpl;
+import com.maliitourist.apigestionregions.apigestionregions.message.request.LoginRequest;
+import com.maliitourist.apigestionregions.apigestionregions.message.request.SignupRequest;
+import com.maliitourist.apigestionregions.apigestionregions.message.response.JwtResponse;
+import com.maliitourist.apigestionregions.apigestionregions.message.response.ResponseMessage;
 import com.maliitourist.apigestionregions.apigestionregions.models.Admin;
+import com.maliitourist.apigestionregions.apigestionregions.models.ERole;
+import com.maliitourist.apigestionregions.apigestionregions.models.Role;
+import com.maliitourist.apigestionregions.apigestionregions.repository.AdminRepository;
+import com.maliitourist.apigestionregions.apigestionregions.repository.RoleRepository;
 import com.maliitourist.apigestionregions.apigestionregions.servicesImplementation.AdminServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "admin", description = "Les actions de l'adlinistrateur")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
+@Api(value = "admin", description = "Les actions de l'administrateur")
 @RequestMapping("/admin")
-@Controller
+@RestController
 public class AdminController {
+
+    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+    
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    PasswordEncoder encoder;
+
+    @Autowired
+    JwtUtils jwtUtils;
+    
+    // @Autowired
+    // private OAuth2AuthorizedClientService loadAuthorizedClientService;
+
 
     @Autowired
     private AdminServiceImpl service;
 
+    @Autowired
+    private AdminRepository adminRepository;
+
     // methode pour la création d'un Admin
+    //@PreAuthorize ("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Création d'un administrateur.")
     @PostMapping("/creer")
-    public ResponseEntity<Object> CreerAdmin(@RequestBody Admin Admin) {
+    public ResponseEntity<Object> CreerAdmin(@RequestBody SignupRequest signUpRequest) {
+        if (adminRepository.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseMessage.generateResponse("Erreur: Cet nom d'utilisateur existe déjà!", HttpStatus.BAD_REQUEST, null);
+        }else{
+            Admin admin=new Admin();
+            admin.setNom(signUpRequest.getNom());
+            admin.setPrenom(signUpRequest.getPrenom());
+            admin.setUsername(signUpRequest.getUsername());
+            admin.setPassword(encoder.encode(signUpRequest.getPassword()));
 
-        Admin EnregistreAdmin = service.saveAdmin(Admin);
-        return ResponseMessage.generateResponse("Admin ajouté avec succes", HttpStatus.OK, EnregistreAdmin);
+
+            ///recuperation des roles
+            Set<String> strRoles = signUpRequest.getRole();
+            
+            Set<Role> roles = new HashSet<>();
+
+            if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Erreur: Role nom trouver."));
+            log.info("role non trouvé" + userRole);
+            roles.add(userRole);
+            } else {
+                strRoles.forEach(role -> {
+                    switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                            .orElseThrow(() -> new RuntimeException("Erreur: Role nom trouver."));
+                        roles.add(adminRole);
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                            .orElseThrow(() -> new RuntimeException("Erreur: Role nom trouver."));
+                        roles.add(userRole);
+                    }
+                });
+            }
+
+            admin.setRoles(roles);
+            return ResponseMessage.generateResponse("Admin ajouté avec succes", HttpStatus.OK,service.saveAdmin(admin));
+        }
+
+    }
+    // Fin
+
+    // methode pour le login d'un Admin
+    @ApiOperation(value = "Le login d'un Administrateur.")
+    @PostMapping("/login")
+    public ResponseEntity<Object> Login(@RequestBody LoginRequest loginRequest) {
+
+        Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+            .map(item -> item.getAuthority())
+            .collect(Collectors.toList());
+
+        //Admin EnregistreAdmin = service.saveAdmin(Admin);
+        return ResponseMessage.generateResponse("ok", HttpStatus.OK, new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getNom(), userDetails.getPrenom(), roles));
 
     }
     // Fin
 
     // methode pour la mise à jour d'un Admin
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Mis à jour d'un administrateur.")
     @PutMapping("/mettreajour")
     public ResponseEntity<Object> MiseAJourAdmin(@RequestBody Admin Admin) {
@@ -49,6 +153,7 @@ public class AdminController {
     // Fin
 
     // methode pour la surpression d'un Admin
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Surpression d'un administrateur.")
     @DeleteMapping("/suprimer")
     public ResponseEntity<Object> SuprimerAdmin(@RequestBody Admin Admin) {
@@ -66,8 +171,9 @@ public class AdminController {
 
     // methode pour la liste des Admin
     @ApiOperation(value = "Récuperation de la liste des administrateurs.")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     @GetMapping("/liste")
-    public ResponseEntity<Object> ListeAdmin() {
+    public ResponseEntity<Object> ListeAdmin(Authentication authentication) {
 
         try {
             return ResponseMessage.generateResponse("La liste des admins:", HttpStatus.OK, service.getAllAdmin());

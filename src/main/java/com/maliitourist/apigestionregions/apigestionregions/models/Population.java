@@ -25,8 +25,11 @@ import lombok.Setter;
 @Entity
 public class Population {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int code;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    
+    private Long code;
     private Long nombre_habitants;
     private Long annee;
 

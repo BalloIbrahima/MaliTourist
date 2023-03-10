@@ -3,6 +3,7 @@ package com.maliitourist.apigestionregions.apigestionregions.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maliitourist.apigestionregions.apigestionregions.message.ResponseMessage;
+import com.maliitourist.apigestionregions.apigestionregions.message.response.ResponseMessage;
 import com.maliitourist.apigestionregions.apigestionregions.models.Population;
 import com.maliitourist.apigestionregions.apigestionregions.models.Region;
 import com.maliitourist.apigestionregions.apigestionregions.services.PopulationService;
@@ -20,7 +21,7 @@ import com.maliitourist.apigestionregions.apigestionregions.services.RegionServi
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RequestMapping("/population")
 @Api(value = "population", description = "Les actions à réaliser sur la table population(creation, modification, etc ...).")
 @RestController
@@ -70,7 +71,7 @@ public class PopulationController {
     @ApiOperation(value = "Modificatio d'une population.")
     @PutMapping("/misajour/{codePopulation}")
     public ResponseEntity<Object> ModifierRegion(@RequestBody Population population,
-            @PathVariable(value = "codePopulation") int code) {
+            @PathVariable(value = "codePopulation") Long code) {
 
         Population verif_Langue = service.FindByCode(code);
         if (verif_Langue != null) {
@@ -87,7 +88,7 @@ public class PopulationController {
     @ApiOperation(value = "Recuperation d'une population.")
     @GetMapping("/{codePopulation}")
     public ResponseEntity<Object> RecupereLangue(
-            @PathVariable(value = "CodeRegion") int code) {
+            @PathVariable(value = "CodeRegion") Long code) {
 
         Population verif_Langue = service.FindByCode(code);
         if (verif_Langue != null) {
@@ -103,7 +104,7 @@ public class PopulationController {
     @ApiOperation(value = "Su^pression d'une population.")
     @DeleteMapping("/{codePopulation}")
     public ResponseEntity<Object> SuprimerLangue(
-            @PathVariable(value = "CodePopulation") int code) {
+            @PathVariable(value = "CodePopulation") Long code) {
 
         Population verif_Population = service.FindByCode(code);
         if (verif_Population != null) {

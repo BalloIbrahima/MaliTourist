@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.maliitourist.apigestionregions.apigestionregions.models.Region;
 
-public interface RegionRepository extends JpaRepository<Region, Integer> {
+public interface RegionRepository extends JpaRepository<Region, Long> {
     Region findByNom(String nom);
 
     Region findByCode(String code);

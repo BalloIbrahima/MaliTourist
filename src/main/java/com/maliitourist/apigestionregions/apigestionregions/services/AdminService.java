@@ -11,6 +11,8 @@ public interface AdminService {
     // Methode pour la création d'un admin
     Admin saveAdmin(Admin a);
 
+    
+
     // Methode pour la modification d'un admin
     Admin updateAdmin(Admin a);
 
@@ -19,5 +21,8 @@ public interface AdminService {
 
     // Methode pour la liste des admins à partir d'un admin
     List<Admin> getAllAdmin();
+
+    // Methode pour retrouver un admin a travers son username
+    Admin getByUsername(String username);
 
 }
